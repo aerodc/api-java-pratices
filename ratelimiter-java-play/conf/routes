@@ -1,0 +1,3 @@
+# Routes
+
+GET     /users/:uuid                controllers.UserController.getUserInfo(uuid)
