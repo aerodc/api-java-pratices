@@ -1,3 +1,4 @@
 # Routes
 
+GET     /ping                       controllers.PingController.ping()
 GET     /users/:uuid                controllers.UserController.getUserInfo(uuid)

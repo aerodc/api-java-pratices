@@ -33,9 +33,8 @@ public class RatelimitAction extends Action<Ratelimited> {
         ratelimit.decrease();
 
         if (ratelimit.reached()) {
-            return CompletableFuture.completedFuture(Results.status(429, "too may requests"));
+            return CompletableFuture.completedFuture(Results.status(429, "too may requests for /users endpoint"));
         }
-
 
         return delegate.call(ctx);
     }
