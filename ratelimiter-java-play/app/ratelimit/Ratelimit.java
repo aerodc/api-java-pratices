@@ -10,12 +10,9 @@ public class Ratelimit implements Serializable{
 
     private final Instant expiredAt;
 
-    private final long period;
-
     public Ratelimit(int limit, long period) {
         this.remaining = new AtomicInteger(limit);
         this.expiredAt = Instant.now().plusSeconds(period);
-        this.period = period;
     }
 
 

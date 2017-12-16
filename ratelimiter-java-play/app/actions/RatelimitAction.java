@@ -14,7 +14,7 @@ import java.util.concurrent.CompletionStage;
 
 public class RatelimitAction extends Action<Ratelimited> {
 
-    private static final String APP_GLOBAL_RATELIMIT = "app-global-ratelimit";
+    private static final String USER_ENDPOINT_RATELIMIT = "user-endpoint-ratelimit";
 
     @Inject
     @NamedCache("ratelimit-cache")
@@ -24,18 +24,18 @@ public class RatelimitAction extends Action<Ratelimited> {
     public CompletionStage<Result> call(Http.Context ctx) {
         int limit = configuration.limit();
         int period = configuration.period();
-        Ratelimit ratelimit = cache.getOrElseUpdate(APP_GLOBAL_RATELIMIT, () -> new Ratelimit(limit, period));
+        Ratelimit ratelimit = cache.getOrElseUpdate(USER_ENDPOINT_RATELIMIT, () -> new Ratelimit(limit, period));
+
+        if (ratelimit.expired()) {
+            ratelimit = new Ratelimit(limit, period);
+            cache.set(USER_ENDPOINT_RATELIMIT, ratelimit);
+        }
+        ratelimit.decrease();
 
         if (ratelimit.reached()) {
             return CompletableFuture.completedFuture(Results.status(429, "too may requests"));
         }
 
-        if (ratelimit.expired()) {
-            ratelimit = new Ratelimit(limit, period);
-            cache.set(APP_GLOBAL_RATELIMIT, ratelimit);
-        }
-
-        ratelimit.decrease();
 
         return delegate.call(ctx);
     }
