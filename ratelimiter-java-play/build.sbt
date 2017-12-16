@@ -1,4 +1,4 @@
-name := """play-java-starter-example"""
+name := """ratelimiter-java-play"""
 
 version := "1.0-SNAPSHOT"
 
