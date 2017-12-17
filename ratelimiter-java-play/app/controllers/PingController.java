@@ -1,10 +1,9 @@
 package controllers;
 
+import play.mvc.Controller;
 import play.mvc.Result;
 
-import static play.mvc.Results.ok;
-
-public class PingController {
+public class PingController extends Controller {
 
     public Result ping(){
         return ok();
