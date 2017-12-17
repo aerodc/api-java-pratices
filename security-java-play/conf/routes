@@ -2,3 +2,4 @@
 
 GET     /ping                       controllers.PingController.ping()
 GET     /users/:uuid                controllers.UserController.getUserInfo(uuid)
+POST    /authentication             controllers.AuthenticationController.authenticate(username, password)

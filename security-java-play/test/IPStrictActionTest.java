@@ -14,7 +14,7 @@ public class IPStrictActionTest{
         TestServer server = testServer(3333);
         running(server, () -> {
             try (WSClient ws = WSTestClient.newClient(3333)) {
-                CompletionStage<WSResponse> completionStage = ws.url("/users/uuid123").get();
+                CompletionStage<WSResponse> completionStage = ws.url("/users/uuid123").addHeader("Authorization", "Bearer accesstokenadmintest123").get();
                 WSResponse response = completionStage.toCompletableFuture().get();
                 assertEquals(200, response.getStatus());
             } catch (Exception e) {

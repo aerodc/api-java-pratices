@@ -1,12 +1,13 @@
 package controllers;
 
+import actions.Authorization;
 import actions.IPStrict;
+import play.mvc.Controller;
 import play.mvc.Result;
 
-import static play.mvc.Results.ok;
-
 @IPStrict
-public class PingController {
+@Authorization(need = false)
+public class PingController extends Controller {
 
     public Result ping(){
         return ok();
